@@ -367,3 +367,22 @@ h1 {
 .forgot-password a:hover {
   text-decoration: underline;
 }
+
+
+
+nav{
+  position: relative;
+  z-index: 1;
+
+}
+
+nav div{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap:40px;
+}
+nav.before .active-element{
+  transform: rotateY(180deg);
+}
