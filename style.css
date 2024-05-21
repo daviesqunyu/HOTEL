@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
   padding: 0;
   margin: 0;
@@ -11,37 +12,30 @@ body {
   justify-content: center;
   min-height: 100vh;
   margin: 0;
-  background-image: linear-gradient(#4cc191, #4188b1); /* Fix the typo */
+  background-image: linear-gradient(#4cc191, #4188b1);
 }
 
 h1 {
   position: absolute;
   top: 5%;
   left: 50%;
-  transform: translateX(-35%);
+  transform: translateX(-50%);
   text-align: center;
-  padding-top: 50px; /* Adjusted position */
-  padding-bottom: 50px; /* Adjusted position */
-  padding-left: 50px; /* Adjusted position */
-  padding-right: 45px; /* Adjusted position */
-  color: #fff; /* Bright text color */
-  font-weight: 900; /* Making the text very bold */
-  animation: flicker 3s infinite; /* Flickering animation */
-  background-color: #000; /* Dark background color */
+  padding: 50px;
+  color: #fff;
+  font-weight: 900;
+  animation: flicker 3s infinite;
+  background-color: #000;
   font-size: 48px;
-  font-weight: 1000px;
-  
 }
 
 @keyframes flicker {
-  0%, 100% { color: rgb(255, 0, 0); } /* Red color */
-  33% { color: yellow; } /* Yellow color */
-  66% { color: rgb(0, 255, 0); } /* Green color */
+  0%, 100% { color: rgb(255, 0, 0); }
+  33% { color: yellow; }
+  66% { color: rgb(0, 255, 0); }
 }
 
-
-
-
+/* Traffic Pole and Car */
 .traffic-pole {
   width: 8px;
   height: 150px;
@@ -51,7 +45,6 @@ h1 {
   transform: translateX(-50%);
 }
 
-
 .traffic-pole.left {
   left: 20%;
 }
@@ -60,9 +53,6 @@ h1 {
   right: 20%;
 }
 
-
-
-
 .car {
   width: 100px;
   height: 50px;
@@ -70,7 +60,6 @@ h1 {
   position: absolute;
   bottom: 25px;
   animation: moveCar 5s linear infinite;
-  overflow: hidden;
 }
 
 .wheel {
@@ -95,10 +84,10 @@ h1 {
   100% { left: 100%; }
 }
 
-
+/* Social Media Icons */
 .social-media-icons {
   position: fixed;
-  bottom: 0px; /* Adjust vertical position as needed */
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -106,65 +95,49 @@ h1 {
 .social-media-icons a {
   margin: 0 10px;
   transition: transform 0.3s ease;
-  font-size: 24px; /* Adjust icon size as needed */
-  color: #7e2121; /* Change icon color as needed */
+  font-size: 24px;
+  color: #7e2121;
 }
 
 .social-media-icons a:hover {
   transform: scale(1.2);
 }
 
-.traffic-link {
-  display: block;
-  width: 2200px;
-  padding: 70px;
-  background-color: #170724;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  font-size: 18px;
-  border-radius: 5px;
-  margin: 0 auto;
-}
-
+/* Traffic Link Button */
 .traffic-link {
   display: inline-block;
   padding: 40px 20px;
-  background-color: #0ae912; /* Green background color */
-  color: #333; /* Darker text color */
-  font-weight: bold; /* Making the text bold */
+  background-color: #0ae912;
+  color: #333;
+  font-weight: bold;
   text-decoration: none;
-  border: 2px solid #4CAF50; /* Matching border color with background */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .traffic-link:hover {
-  background-color: #045f32; /* Darker green on hover */
-  color: #530202; /* text color on hover */
+  background-color: #045f32;
+  color: #530202;
 }
 
+/* Dropdown Menu */
 .dropdown {
   position: absolute;
-  top: 20px; /* Adjust as needed */
-  left: 20px; /* Adjust as needed */
+  top: 20px;
+  left: 20px;
 }
 
 .dropdown-btn {
-  padding: 15px 30px; /* Increase padding for larger size */
-  background-color: #025304; /* Green background color */
-  color: #fff; /* White text color */
-  font-weight: bold; /* Making the text bold */
+  padding: 15px 30px;
+  background-color: #025304;
+  color: #fff;
+  font-weight: bold;
   border: none;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 38px;
+  font-size: 18px;
 }
-.arrow {
-  margin-left: 5px; /* Adjust spacing between text and arrow */
-  background-color: #041305; /*  background color */
-}
-
 
 .dropdown-content {
   display: none;
@@ -176,33 +149,33 @@ h1 {
 }
 
 .dropdown-content button {
-  width: 100%; /* Make buttons fill the container */
-  padding: 10px 20px; /* Adjust padding as needed */
-  background-color: #33f53d; /* Green background color */
-  color: #fff; /* White text color */
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #33f53d;
+  color: #fff;
   border: none;
   text-align: left;
-  text-decoration: none;
   display: block;
   cursor: pointer;
-  font-weight: bold; /* Making the text bold */
+  font-weight: bold;
   font-size: 18px;
 }
 
 .dropdown-content button:hover {
-  background-color: #000500; /* Darker green on hover */
+  background-color: #000500;
 }
 
+/* Traffic Light */
 .traffic-light {
   position: fixed;
   bottom: 25px;
-  right: 50px; /* Adjust as needed */
+  right: 50px;
 }
 
 .light-container {
-  background-color: #0f0808; /* Dark gray background resembling traffic light pole */
-  padding: 10px; /* Adjust padding as needed */
-  border-radius: 10px; /* Rounded corners */
+  background-color: #0f0808;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .light {
@@ -243,73 +216,63 @@ h1 {
   50% { opacity: 0.5; }
 }
 
-
-
+/* Road */
 .road {
   position: fixed;
   bottom: 25px;
   left: 0;
   width: 100%;
-  height: 100px; /* Adjust height as needed */
-  background-color: rgba(0, 0, 0, 0.5); /* Translucent black color */
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.road::before {
+.road::before,
+.road::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 0;
   width: 100%;
-  height: 1px; /* Road line thickness */
-  background-color: #fff; /* White color for road lines */
+  height: 1px;
+  background-color: #fff;
 }
 
 .road::after {
-  content: "";
-  position: absolute;
-  top: calc(50% - 5px); /* Adjust position as needed */
-  left: 0;
-  width: 100%;
-  height: 1px; /* Road line thickness */
-  background-color: #fff; /* White color for road lines */
+  top: calc(50% - 5px);
 }
 
-
-
-
-/*LOGPAGE CSS CODES*/
-
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.login-form {
+/* Login Page */
+.login-form, .signup-form {
   width: 300px;
   padding: 20px;
-  border: 1px solid #1f05b1;
+  margin-left: 20px;
   border-radius: 10px;
   background-color: #9eda82;
 }
 
-.login-form h2 {
+.login-form {
+  border: 1px solid #1f05b1;
+}
+
+.signup-form {
+  background-color: #84c6ca;
+  border: 1px solid #ccc;
+}
+
+.login-form h2, .signup-form h2 {
   padding: 15px;
   margin-top: 0;
   text-align: center;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"] {
+.login-form input, .signup-form input {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
 }
 
-.login-form button {
+.login-form button, .signup-form button {
   width: 100%;
   padding: 10px;
   background-color: #4CAF50;
@@ -319,41 +282,11 @@ h1 {
   cursor: pointer;
 }
 
-.signup-form {
-  width: 300px;
-  padding: 20px;
-  margin-left: 20px; /* Adjust spacing between login and signup forms */
-  border: 5px solid #ccc;
-  border-radius: 10px;
-  background-color: #84c6ca;
-}
-
-.signup-form h2 {
-  padding: 15px;
-  margin-top: 0;
-  text-align: center;
-}
-
-.signup-form input[type="text"],
-.signup-form input[type="email"],
-.signup-form input[type="password"] {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .signup-form button {
-  width: 100%;
-  padding: 10px;
   background-color: #02437c;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
-/* forgot password code*/
+/* Forgot Password */
 .forgot-password {
   margin-top: 10px;
   text-align: center;
@@ -368,21 +301,56 @@ h1 {
   text-decoration: underline;
 }
 
-
-
-nav{
-  position: relative;
-  z-index: 1;
-
-}
-
-nav div{
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* General Container */
+.container {
   display: flex;
-  gap:40px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ebe085;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-nav.before .active-element{
-  transform: rotateY(180deg);
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+.status div {
+  margin: 20px 0;
+  font-size: 28px;
+  color: #a30404;
+}
+
+.loading {
+  font-style: italic;
+}
+
+/* Data Container */
+.data-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.data-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1 1 300px;
+}
+
+.data-card h2 {
+  margin-top: 0;
+  color: #555;
+}
+
+/* Visual Representation Styles */
+.visual-representation {
+  margin-top: 40px;
+  text-align: center;
 }
