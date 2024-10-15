@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Davis Kunyu">
+  <title>Sign Up - Davira Suites</title>
+
+  <!-- Inline CSS for styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    header {
+      background-color: #001f3f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+
+    form {
+      margin: 0 auto;
+      width: 50%;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0074D9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #001f3f;
+    }
+
+    .otp-btn {
+      background-color: #FF851B;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .otp-btn:hover {
+      background-color: #FF851B;
+    }
+
+    .captcha {
+      margin-top: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .captcha img {
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .captcha p {
+      margin: 10px 0;
+    }
+
+    .captcha input {
+      padding: 10px;
+      margin: 10px;
+      width: 50%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .captcha button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .captcha button:hover {
+      background-color: #218838;
+    }
+
+    .cookies-banner {
+      background-color: #ffcc00;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .cookies-banner button {
+      background-color: #0074D9;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+    <h1>Sign Up for Davira Suites</h1>
+  </header>
+
+  <main>
+    <form action="signup.php" method="POST">
+      <input type="text" name="username" placeholder="Enter Username" required>
+      <input type="email" name="email" placeholder="Enter Email" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+      <input type="text" name="phone" placeholder="Enter Phone Number" required>
+      <input type="text" name="address" placeholder="Enter Address" required>
+
+      <!-- OTP Section -->
+      <div>
+        <button type="button" class="otp-btn" onclick="requestOtp()">Request OTP</button>
+      </div>
+
+      <!-- CAPTCHA Section -->
+      <div class="captcha">
+        <img src="captcha-image.jpg" alt="CAPTCHA">
+        <p>Select all images with traffic lights</p>
+        <input type="text" placeholder="Enter CAPTCHA" required>
+        <button type="button">Verify CAPTCHA</button>
+      </div>
+
+      <!-- Cookies acceptance banner -->
+      <div class="cookies-banner">
+        This website uses cookies to ensure you get the best experience.
+        <button type="button">Accept Cookies</button>
+      </div>
+
+      <!-- Sign Up Button -->
+      <button type="submit">Sign Up</button>
+    </form>
+  </main>
+
+  <script>
+    function requestOtp() {
+      alert("OTP has been sent to your phone.");
+    }
+  </script>
+
+</body>
+
+</html>
