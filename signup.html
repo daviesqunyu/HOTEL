@@ -7,7 +7,8 @@
   <meta name="author" content="Davis Kunyu">
   <title>Sign Up - Davira Suites</title>
 
-  <!-- Inline CSS for styling -->
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -45,31 +46,56 @@
       border-radius: 5px;
     }
 
-    button {
+    /* Button arrangements */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .icon-btn {
       padding: 10px 20px;
       background-color: #0074D9;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       transition: background-color 0.3s;
+      margin-bottom: 15px;
     }
 
-    button:hover {
-      background-color: #001f3f;
+    .icon-btn i {
+      font-size: 20px;
     }
 
-    .otp-btn {
-      background-color: #FF851B;
-      margin-top: 10px;
-      cursor: pointer;
+    .icon-btn:hover {
+      background-color: #25486c;
     }
 
-    .otp-btn:hover {
-      background-color: #FF851B;
-    }
+  /* Bigger and darker sign-up button */
+#submit-btn {
+  background-color: #190546;
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: 900; /* Boldest text */
+  color: #ffffff; /* White text for better visibility */
+  border-radius: 10px; /* Curved edges */
+  border: none; /* Remove default borders */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+}
 
+#submit-btn:hover {
+  background-color: #0f2389; /* Darker color on hover */
+  transform: scale(1.05); /* Slightly enlarges the button on hover */
+}
+
+    /* CAPTCHA Section */
     .captcha {
+      display: none;
       margin-top: 20px;
       background-color: #f9f9f9;
       border: 1px solid #ddd;
@@ -78,21 +104,23 @@
       border-radius: 5px;
     }
 
-    .captcha img {
-      width: 100%;
-      max-width: 200px;
+    .captcha-images {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 20px 0;
     }
 
-    .captcha p {
-      margin: 10px 0;
+    .captcha-images img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      border: 2px solid #ccc;
+      transition: border-color 0.3s;
     }
 
-    .captcha input {
-      padding: 10px;
-      margin: 10px;
-      width: 50%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .captcha-images img.selected {
+      border-color: #4CAF50;
     }
 
     .captcha button {
@@ -109,13 +137,22 @@
       background-color: #218838;
     }
 
+    /* Cookies Banner */
     .cookies-banner {
+      position: fixed;
+      bottom: -100px;
+      left: 0;
+      right: 0;
       background-color: #ffcc00;
       padding: 10px;
       border-radius: 5px;
-      margin-top: 20px;
       text-align: center;
       font-size: 14px;
+      transition: bottom 0.5s ease-in-out;
+    }
+
+    .cookies-banner.visible {
+      bottom: 0;
     }
 
     .cookies-banner button {
@@ -124,6 +161,13 @@
       padding: 5px 10px;
       border: none;
       cursor: pointer;
+      margin: 5px;
+    }
+
+    #captcha-result {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 
@@ -136,7 +180,7 @@
   </header>
 
   <main>
-    <form action="signup.php" method="POST">
+    <form id="signup-form" action="signup.php" method="POST">
       <input type="text" name="username" placeholder="Enter Username" required>
       <input type="email" name="email" placeholder="Enter Email" required>
       <input type="password" name="password" placeholder="Enter Password" required>
@@ -144,33 +188,109 @@
       <input type="text" name="phone" placeholder="Enter Phone Number" required>
       <input type="text" name="address" placeholder="Enter Address" required>
 
-      <!-- OTP Section -->
-      <div>
-        <button type="button" class="otp-btn" onclick="requestOtp()">Request OTP</button>
+      <!-- OTP and "I'm not a robot" Section -->
+      <div class="btn-group">
+        <button type="button" class="icon-btn" onclick="requestOtp()">
+          <i class="fas fa-mobile-alt"></i> OTP
+        </button>
+        <button type="button" class="icon-btn" id="robot-check" onclick="showCaptcha()">
+          <i class="fas fa-robot"></i> I'm not a robot
+        </button>
       </div>
 
       <!-- CAPTCHA Section -->
-      <div class="captcha">
-        <img src="captcha-image.jpg" alt="CAPTCHA">
-        <p>Select all images with traffic lights</p>
-        <input type="text" placeholder="Enter CAPTCHA" required>
-        <button type="button">Verify CAPTCHA</button>
+      <div id="captcha" class="captcha">
+        <p>Select all images with bedsides in a hotel</p>
+        <div class="captcha-images">
+          <img src="bedside.jpg" alt="bedside" data-correct="true" onclick="selectImage(this)">
+          <img src="bed.jpg" alt="random image 1" data-correct="false" onclick="selectImage(this)">
+          <img src="sidebed.jpg" alt="random image 2" data-correct="false" onclick="selectImage(this)">
+          <img src="hotel.jpg" alt="bedside" data-correct="true" onclick="selectImage(this)">
+        </div>
+        <button type="button" onclick="verifyCaptcha()">Verify CAPTCHA</button>
+        <p id="captcha-result"></p>
       </div>
 
-      <!-- Cookies acceptance banner -->
-      <div class="cookies-banner">
-        This website uses cookies to ensure you get the best experience.
-        <button type="button">Accept Cookies</button>
+      <!-- Bigger Sign Up Button -->
+      <div class="btn-group">
+        <button id="submit-btn" type="submit" disabled>Sign Up</button>
       </div>
-
-      <!-- Sign Up Button -->
-      <button type="submit">Sign Up</button>
     </form>
   </main>
 
+  <!-- Cookies acceptance banner -->
+  <div class="cookies-banner" id="cookies-banner">
+    This website uses cookies to ensure you get the best experience.
+    <button type="button" onclick="acceptCookies()">Accept Cookies</button>
+    <button type="button" onclick="rejectCookies()">Reject Cookies</button>
+  </div>
+
   <script>
+    let selectedImages = [];
+    let captchaVerified = false;
+
+    // Function to simulate OTP request
     function requestOtp() {
       alert("OTP has been sent to your phone.");
+    }
+
+    // Show CAPTCHA when "I'm not a robot" is clicked
+    function showCaptcha() {
+      const captcha = document.getElementById('captcha');
+      captcha.style.display = 'block'; // Show the CAPTCHA images
+    }
+
+    // Image selection function
+    function selectImage(image) {
+      if (selectedImages.includes(image)) {
+        image.classList.remove('selected');
+        selectedImages = selectedImages.filter(img => img !== image);
+      } else {
+        image.classList.add('selected');
+        selectedImages.push(image);
+      }
+    }
+
+    // CAPTCHA verification
+    function verifyCaptcha() {
+      const correctImages = Array.from(document.querySelectorAll('img[data-correct="true"]'));
+      const allCorrectSelected = correctImages.every(img => selectedImages.includes(img)) && selectedImages.length === correctImages.length;
+      const captchaResult = document.getElementById('captcha-result');
+
+      if (allCorrectSelected) {
+        captchaResult.textContent = "CAPTCHA verified successfully!";
+        captchaResult.style.color = "green";
+        captchaVerified = true;
+        document.getElementById("submit-btn").disabled = false; // Enable sign-up button
+      } else {
+        captchaResult.textContent = "CAPTCHA verification failed. Please try again.";
+        captchaResult.style.color = "red";
+        captchaVerified = false;
+        document.getElementById("submit-btn").disabled = true; // Disable sign-up button
+      }
+    }
+
+    // Cookies acceptance banner slide in and slide out effect
+    function acceptCookies() {
+      const cookiesBanner = document.getElementById('cookies-banner');
+      cookiesBanner.classList.remove('visible');
+      alert("You have accepted cookies.");
+      cookiesBanner.style.display = 'none'; // Hide banner after accepting
+    }
+
+    function rejectCookies() {
+      const cookiesBanner = document.getElementById('cookies-banner');
+      cookiesBanner.classList.remove('visible');
+      alert("You have rejected cookies.");
+      cookiesBanner.style.display = 'none'; // Hide banner after rejecting
+    }
+
+    // Slide in the cookies banner
+    window.onload = function () {
+      const cookiesBanner = document.getElementById('cookies-banner');
+      setTimeout(() => {
+        cookiesBanner.classList.add('visible');
+      }, 1000); // Show cookies banner 1 second after page loads
     }
   </script>
 
