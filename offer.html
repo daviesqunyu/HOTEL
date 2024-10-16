@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offers - Davira Suites</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0f2389;
+    }
+
+    .offer-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .offer-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .offer-item h3 {
+      color: #190546;
+    }
+
+    .offer-item button {
+      padding: 10px 20px;
+      background-color: #0074D9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .offer-item button:hover {
+      background-color: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seasonal Offers</h1>
+  <div class="offer-list" id="offerList"></div>
+
+  <script>
+    const offers = [
+      { name: 'Christmas Offer', discount: '20%', criteria: 'Families with children', event: 'Christmas' },
+      { name: 'Anniversary Offer', discount: '15%', criteria: 'Couples', event: 'Anniversary' },
+      { name: 'Disability Offer', discount: '30%', criteria: 'Guests with disabilities', event: 'Any Day' },
+      { name: 'Loyalty Offer', discount: '10%', criteria: '5th Visit', event: 'Any Day' },
+      { name: 'New Year Offer', discount: '25%', criteria: 'Couples', event: 'New Year\'s Eve' }
+    ];
+
+    const offerList = document.getElementById('offerList');
+
+    offers.forEach(offer => {
+      const offerItem = document.createElement('div');
+      offerItem.className = 'offer-item';
+
+      offerItem.innerHTML = `
+        <h3>${offer.name}</h3>
+        <p>Discount: ${offer.discount}</p>
+        <p>Criteria: ${offer.criteria}</p>
+        <p>Event: ${offer.event}</p>
+        <button>Claim Offer</button>
+      `;
+      offerList.appendChild(offerItem);
+    });
+  </script>
+</body>
+</html>

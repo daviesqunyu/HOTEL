@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rooms - Davira Suites</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #190546;
+    }
+
+    .room-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .room-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .room-item h3 {
+      color: #0f2389;
+    }
+
+    .room-item button {
+      padding: 10px 20px;
+      background-color: #0f2389;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .room-item button:hover {
+      background-color: #190546;
+    }
+  </style>
+</head>
+<body>
+  <h1>Available Rooms</h1>
+  <div class="room-list" id="roomList"></div>
+
+  <script>
+    const rooms = [
+      { name: 'Board Room', price: 500, type: 'Meeting', available: true },
+      { name: 'Executive Room', price: 1000, type: 'Luxury', available: true },
+      { name: 'Meeting Room', price: 300, type: 'Business', available: false },
+      { name: 'Rooms for Hire', price: 200, type: 'Economy', available: true },
+      { name: 'Rooms for Rent', price: 400, type: 'Standard', available: true }
+    ];
+
+    const roomList = document.getElementById('roomList');
+
+    rooms.forEach(room => {
+      const roomItem = document.createElement('div');
+      roomItem.className = 'room-item';
+
+      roomItem.innerHTML = `
+        <h3>${room.name}</h3>
+        <p>Price: $${room.price}</p>
+        <p>Type: ${room.type}</p>
+        <button ${room.available ? '' : 'disabled'}>${room.available ? 'Book Now' : 'Unavailable'}</button>
+      `;
+      roomList.appendChild(roomItem);
+    });
+  </script>
+</body>
+</html>

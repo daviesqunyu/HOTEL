@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservations - Davira Suites</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #190546;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0f2389;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #190546;
+    }
+  </style>
+</head>
+<body>
+  <h1>Make a Reservation</h1>
+
+  <form id="reservationForm">
+    <label for="service">Select Service</label>
+    <select id="service">
+      <option value="room">Room Reservation</option>
+      <option value="spa">Spa Schedule</option>
+      <option value="swimming">Swimming Schedule</option>
+      <option value="table">Table Reservation</option>
+      <option value="airbnb">Airbnb Booking</option>
+    </select>
+
+    <label for="date">Select Date</label>
+    <input type="date" id="date" required>
+
+    <label for="time">Select Time (if applicable)</label>
+    <input type="time" id="time">
+
+    <label for="payment">Payment Amount</label>
+    <input type="number" id="payment" placeholder="Enter amount" required>
+
+    <button type="button" onclick="submitReservation()">Submit Reservation</button>
+  </form>
+
+  <script>
+    function submitReservation() {
+      const service = document.getElementById('service').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value || 'N/A';
+      const payment = document.getElementById('payment').value;
+
+      if (!date || !payment) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+
+      alert(`Reservation confirmed!\nService: ${service}\nDate: ${date}\nTime: ${time}\nPayment: $${payment}`);
+    }
+  </script>
+</body>
+</html>
