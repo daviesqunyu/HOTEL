@@ -1,41 +1,44 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch built-in server",
+            "name": "Launch PHP Built-in Server",
             "type": "php",
             "request": "launch",
+            "runtimeExecutable": "C:\\xaamp\\php\\php.exe", 
             "runtimeArgs": [
                 "-S",
                 "localhost:8000",
                 "-t",
-                "."
+                "${workspaceFolder}"
             ],
+            "cwd": "${workspaceFolder}",
             "port": 9003,
             "serverReadyAction": {
+                "pattern": "Development Server \\(http:\\/\\/localhost:([0-9]+)\\)",
+                "uriFormat": "http://localhost:%s",
                 "action": "openExternally"
             }
         },
         {
             "name": "Attach to Chrome",
-            "port": 9222,
-            "request": "attach",
             "type": "chrome",
-            "webRoot": "${workspaceFolder}"
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}",
+            "url": "http://localhost:8000", // Optional: Specify the URL you want to attach
+            "timeout": 30000 // Set a reasonable timeout value for attaching
         },
         {
-            "type": "php",  // Changed to use PHP as the debugging type
+            "type": "php",
             "request": "launch",
             "name": "Launch home.php with PHP",
-            "program": "${workspaceFolder}/home.php", // Corrected the property to launch PHP files directly
-            "runtimeExecutable": "C:\\xampp\\php\\php.exe", // Added PHP path to ensure it can run PHP files
+            "program": "${workspaceFolder}/home.php", 
+            "runtimeExecutable": "C:\\xaamp\\php\\php.exe", 
             "args": [
                 "-S", "localhost:8000"
             ],
-            "cwd": "${workspaceFolder}", // The current working directory for your server
+            "cwd": "${workspaceFolder}", 
             "port": 8000,
             "serverReadyAction": {
                 "pattern": "Development Server \\(http:\\/\\/localhost:([0-9]+)\\)",
@@ -43,16 +46,17 @@
             }
         },
         {
-            "type": "msedge", // Configuration for debugging using Microsoft Edge
+            "type": "msedge",
             "request": "launch",
-            "name": "Open home.html",
-            "file": "C:/xampp/htdocs/HOTEL/home.html", // Corrected file path for Windows
+            "name": "Open home.html with Edge",
+            "file": "C:\\xaamp\\htdocs\\HOTEL\\home.html",
             "webRoot": "${workspaceFolder}",
-            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", // Specify Edge executable explicitly if needed
+            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", 
             "runtimeArgs": [
-                "--remote-debugging-port=9222" // Enable remote debugging on Edge
+                "--remote-debugging-port=9222"
             ],
-            "port": 9222
+            "port": 9222,
+            "timeout": 30000 // Set a reasonable timeout value for launching Edge
         }
     ]
 }
