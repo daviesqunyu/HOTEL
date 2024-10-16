@@ -1,3 +1,8 @@
+<?php
+// Include the database connection if needed
+include 'db.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,21 +25,21 @@
     }
 
     /* Header styles */
-    header {
+    .hero-section {
       text-align: center;
       padding: 60px;
       background-color: rgba(0, 0, 0, 0.6);
       animation: fadeIn 2s ease-in;
     }
 
-    header h1 {
+    .hero-section h1 {
       font-size: 55px;
       margin: 0;
       padding-bottom: 10px;
       font-weight: bold;
     }
 
-    header p {
+    .hero-section p {
       font-size: 22px;
       padding-bottom: 30px;
     }
@@ -58,7 +63,7 @@
     }
 
     /* Main content area */
-    main {
+    .about-section, .services {
       padding: 40px;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.6);
@@ -67,43 +72,18 @@
       animation: slideInUp 1.5s ease-in;
     }
 
-    main h2 {
+    .about-section h2, .services h2 {
       font-size: 36px;
       font-weight: bold;
       margin-bottom: 20px;
     }
 
-    main p {
+    .about-section p, .services p {
       font-size: 18px;
       color: #f0f0f0;
       line-height: 1.8;
       padding: 0 15%;
       animation: fadeIn 2s ease-in-out;
-    }
-
-    /* Services section */
-    .services {
-      background: url('luxury.jpg') no-repeat center/cover;
-      padding: 40px;
-      color: white;
-      background-size: cover;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-      margin: 40px auto;
-      max-width: 1000px;
-      border-radius: 15px;
-      text-align: center;
-      animation: zoomIn 1.5s ease-out;
-    }
-
-    .services h2 {
-      font-size: 36px;
-      color: #0074D9;
-      font-weight: bold;
-    }
-
-    .services p {
-      font-size: 18px;
-      margin: 10px 0;
     }
 
     /* Contact Information */
@@ -167,32 +147,39 @@
         transform: translateY(0);
       }
     }
-
-    @keyframes zoomIn {
-      from {
-        transform: scale(0.8);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
   </style>
 
   <!-- Icons for social links -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+  <!-- Inline JavaScript for page navigation -->
+  <script>
+    function navigateTo(page) {
+      // Before navigating, check if the page exists to handle broken links gracefully
+      fetch(page, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = page;
+          } else {
+            alert('The page you are trying to access is currently unavailable.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while trying to navigate to the page.');
+        });
+    }
+  </script>
 </head>
 
 <body>
 
   <!-- Hero Section -->
-  <header>
+  <header class="hero-section">
     <h1>Welcome to Davira Suites</h1>
     <p>Where Luxury Meets Comfort</p>
     <nav>
-      <button onclick="navigateTo('login.html')">Login</button>
+      <button onclick="navigateTo('login.php')">Login</button>
       <button onclick="navigateTo('services.html')">Our Services</button>
       <button onclick="navigateTo('contact.html')">Contact Us</button>
     </nav>
@@ -200,8 +187,11 @@
 
   <!-- Main content area -->
   <main>
-    <h2>About Davira Suites</h2>
-    <p>At Davira Suites, we pride ourselves on delivering unparalleled luxury and comfort. Our hotel, located in the vibrant heart of the city, offers state-of-the-art accommodations with modern amenities. Whether you're staying for business or leisure, our experienced team is dedicated to ensuring your experience is nothing short of exceptional.</p>
+    <section class="about-section">
+      <h2>About Davira Suites</h2>
+      <p>At Davira Suites, we pride ourselves on delivering unparalleled luxury and comfort. Our hotel, located in the vibrant heart of the city, offers state-of-the-art accommodations with modern amenities. Whether you're staying for business or leisure, our experienced team is dedicated to ensuring your experience is nothing short of exceptional.</p>
+    </section>
+
     <section class="services">
       <h2>Explore Our Premium Services</h2>
       <p>From luxury suites to world-class spa treatments, we offer a wide range of services to make your stay unforgettable. Enjoy fine dining, rejuvenating spa therapies, a fully equipped fitness center, and more.</p>
@@ -214,9 +204,9 @@
     <div class="contact-icons">
       <a href="tel:+1234567890"><i class="fas fa-phone"></i></a>
       <a href="mailto:info@davirasuites.com"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a>
-      <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
     </div>
   </div>
 
@@ -224,13 +214,6 @@
   <footer>
     <p>&copy; 2024 Davira Suites - All Rights Reserved</p>
   </footer>
-
-  <!-- JavaScript for navigation -->
-  <script>
-    function navigateTo(page) {
-      window.location.href = page;
-    }
-  </script>
 
 </body>
 

@@ -290,6 +290,7 @@
 
   <!-- Navigation Buttons -->
   <div class="nav-buttons">
+    <button onclick="window.location.href='home.php'">Home</button>
     <button onclick="window.location.href='rooms.html'">View Available Rooms</button>
     <button onclick="window.location.href='offer.html'">Check Offers</button>
     <button onclick="window.location.href='reservations.html'">Make a Reservation</button>

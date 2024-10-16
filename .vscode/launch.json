@@ -5,10 +5,54 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "msedge",
+            "name": "Launch built-in server",
+            "type": "php",
+            "request": "launch",
+            "runtimeArgs": [
+                "-S",
+                "localhost:8000",
+                "-t",
+                "."
+            ],
+            "port": 9003,
+            "serverReadyAction": {
+                "action": "openExternally"
+            }
+        },
+        {
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "php",  // Changed to use PHP as the debugging type
+            "request": "launch",
+            "name": "Launch home.php with PHP",
+            "program": "${workspaceFolder}/home.php", // Corrected the property to launch PHP files directly
+            "runtimeExecutable": "C:\\xampp\\php\\php.exe", // Added PHP path to ensure it can run PHP files
+            "args": [
+                "-S", "localhost:8000"
+            ],
+            "cwd": "${workspaceFolder}", // The current working directory for your server
+            "port": 8000,
+            "serverReadyAction": {
+                "pattern": "Development Server \\(http:\\/\\/localhost:([0-9]+)\\)",
+                "uriFormat": "http://localhost:%s"
+            }
+        },
+        {
+            "type": "msedge", // Configuration for debugging using Microsoft Edge
             "request": "launch",
             "name": "Open home.html",
-            "file": "/home/davis/traffic/home.html"
+            "file": "C:/xampp/htdocs/HOTEL/home.html", // Corrected file path for Windows
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", // Specify Edge executable explicitly if needed
+            "runtimeArgs": [
+                "--remote-debugging-port=9222" // Enable remote debugging on Edge
+            ],
+            "port": 9222
         }
     ]
 }
