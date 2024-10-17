@@ -1,19 +1,49 @@
+
 <?php
-// Connecting PHP backend to the Hotel Management System
-// Step by step integration, maintaining the in-page styling, and enhancing the design and user experience of each file.
+// login.php
+// Include the database connection and start session
+include 'db_connect.php';
+session_start();
 
-/* Step 1: Setup database connection in a reusable way */
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// Create a reusable PHP file for database connection (db_connect.php) to be included in all other files where needed
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'hotel_management_system';
+    // Prepare statement to check user credentials
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    
+    if (!$stmt) {
+        die("Failed to prepare statement: " . $conn->error);
+    }
 
-$conn = new mysqli($host, $username, $password, $dbname);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    if ($result->num_rows === 0) {
+        $login_error = "Invalid username or password.";
+    } else {
+        $user = $result->fetch_assoc();
+        // Verify the password
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] == 'admin') {
+                header("Location: adminprofile.php");
+            } else {
+                header("Location: userprofile.php");
+            }
+            exit();
+        } else {
+            $login_error = "Invalid username or password.";
+        }
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
 
@@ -23,7 +53,7 @@ if ($conn->connect_error) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Davis Kunyu">
-  <title>Signup - Davira Suites</title>
+  <title>Login - Davira Suites</title>
 
   <style>
     body {
@@ -62,65 +92,173 @@ if ($conn->connect_error) {
       border-radius: 5px;
     }
 
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .btn-submit {
+    button {
       padding: 15px 30px;
       background-color: #0074D9;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
-    .btn-submit:hover {
+    button:hover {
       background-color: #001f3f;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-
-  <?php
-  // Including the database connection file
-  include 'db_connect.php';
-
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username = $_POST['username'];
-      $email = $_POST['email'];
-      $phone = $_POST['phone'];
-      $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-      $sql = "INSERT INTO users (username, email, phone, password) VALUES ('$username', '$email', '$phone', '$password')";
-
-      if ($conn->query($sql) === TRUE) {
-          echo "<script>alert('Registration successful! Please log in.'); window.location.href = 'login.php';</script>";
-      } else {
-          echo "<script>alert('Error: ' . $sql . ' ' . $conn->error);</script>";
-      }
-  }
-  ?>
-
   <header>
-    <h1>Sign Up</h1>
+    <h1>Login to Davira Suites</h1>
   </header>
 
   <main>
-    <form action="signup.php" method="POST">
+    <form action="login.php" method="POST">
       <input type="text" name="username" placeholder="Enter Username" required>
-      <input type="email" name="email" placeholder="Enter Email" required>
-      <input type="text" name="phone" placeholder="Enter Phone Number" required>
       <input type="password" name="password" placeholder="Enter Password" required>
-      <div class="btn-group">
-        <button type="submit" class="btn-submit">Sign Up</button>
-      </div>
+      <button type="submit">Login</button>
+      <?php if (isset($login_error)): ?>
+          <p style="color: red;"> <?php echo $login_error; ?> </p>
+      <?php endif; ?>
     </form>
   </main>
+</body>
+</html>
+```
 
+userprofile.php
+```php
+<?php
+// userprofile.php
+// Include the database connection and start session
+include 'db_connect.php';
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'user') {
+    header("Location: login.php");
+    exit();
+}
+
+// Fetch the user data from the database
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Failed to prepare statement: " . $conn->error);
+}
+
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    die("User not found.");
+}
+
+$user = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Davis Kunyu">
+  <title>User Profile - Davira Suites</title>
+  
+  <!-- Reuse CSS and JS styling from sign up page -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>User Profile</h1>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <h2>Welcome, <?php echo htmlspecialchars($user['username']); ?>!</h2>
+      <div class="profile-details">
+        <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
+        <p>Phone: <?php echo htmlspecialchars($user['phone']); ?></p>
+        <p>Address: <?php echo isset($user['address']) ? htmlspecialchars($user['address']) : 'Not provided'; ?></p>
+      </div>
+      <button onclick="navigateTo('home.php')">Back to Home</button>
+    </div>
+  </main>
+
+</body>
+</html>
+```
+
+adminprofile.php
+```php
+<?php
+// adminprofile.php
+// Include the database connection and start session
+include 'db_connect.php';
+session_start();
+
+// Check if the admin is logged in
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
+// Fetch the admin data from the database
+$admin_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE id = ? AND role = 'admin'";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Failed to prepare statement: " . $conn->error);
+}
+
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    die("Admin not found.");
+}
+
+$admin = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Davis Kunyu">
+  <title>Admin Profile - Davira Suites</title>
+
+  <!-- Reuse CSS and JS styling from sign up page -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Admin Profile</h1>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <h2>Welcome, <?php echo htmlspecialchars($admin['username']); ?>!</h2>
+      <div class="profile-details">
+        <p>Email: <?php echo htmlspecialchars($admin['email']); ?></p>
+      </div>
+      <button onclick="navigateTo('home.php')">Back to Home</button>
+    </div>
+  </main>
 </body>
 </html>

@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.css" />
 
   <!-- Inline CSS for styling -->
   <style>
@@ -112,6 +115,7 @@
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       color: #fff;
+      animation: animate__animated animate__fadeInUp;
     }
 
     .section h2 {
@@ -267,7 +271,7 @@
   <div class="icons-container">
     <!-- Admin Icon (Left) -->
     <div class="icon">
-      <a href="adminprofile.html">
+      <a href="adminprofile.php">
         <i class="fas fa-user-shield"></i>
         <span class="icon-label">Admin</span>
       </a>
@@ -275,7 +279,7 @@
 
     <!-- Profile Icon (Right) -->
     <div class="icon">
-      <a href="userprofile.html">
+      <a href="userprofile.php">
         <i class="fas fa-user"></i>
         <span class="icon-label">User</span>
       </a>
@@ -332,9 +336,19 @@
         <p>Relax and rejuvenate with our premium spa services, including massages, sauna, and wellness treatments.</p>
       </div>
       <div class="service-item">
-        <img src="hot.jpg" alt="Conference Facilities">
+        <img src="lx.jpg" alt="Conference Facilities">
         <h3>Conference Facilities</h3>
         <p>State-of-the-art conference rooms equipped to meet your business needs with style and efficiency.</p>
+      </div>
+      <div class="service-item">
+        <img src="moor.jpg" alt="Fitness Center">
+        <h3>Fitness Center</h3>
+        <p>Stay fit during your stay with our fully-equipped, high-tech fitness facilities, featuring 4K interactive screens for guided workouts.</p>
+      </div>
+      <div class="service-item">
+        <img src="hot.jpg" alt="Rooftop Lounge">
+        <h3>Rooftop Lounge</h3>
+        <p>Enjoy breathtaking views of the city in our luxury rooftop lounge, complete with a 3D virtual display of city lights at night.</p>
       </div>
     </div>
   </section>
@@ -359,6 +373,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
     // Initialize the map with a marker for the hotel location
@@ -399,6 +414,28 @@
         }
       ]
     });
+
+    // Three.js interactive 3D model for lobby view
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    var geometry = new THREE.BoxGeometry();
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
   </script>
 
 </body>

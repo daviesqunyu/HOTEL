@@ -192,7 +192,7 @@
     <h1>Welcome to Davira Suites</h1>
     <p>Where Luxury Meets Comfort</p>
     <nav>
-      <button onclick="navigateTo('login.html')">Login</button>
+      <button onclick="navigateTo('login.php')">Login</button>
       <button onclick="navigateTo('services.html')">Our Services</button>
       <button onclick="navigateTo('contact.html')">Contact Us</button>
     </nav>
