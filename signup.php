@@ -81,11 +81,11 @@
   background-color: #190546;
   padding: 15px 30px;
   font-size: 20px;
-  font-weight: 900; /* Boldest text */
-  color: #ffffff; /* White text for better visibility */
-  border-radius: 10px; /* Curved edges */
-  border: none; /* Remove default borders */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+  font-weight: 900; 
+  color: #ffffff; 
+  border-radius: 10px; 
+  border: none; 
+  transition: background-color 0.3s, transform 0.2s; 
 }
 
 #submit-btn:hover {
