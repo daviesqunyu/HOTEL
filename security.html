@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Davis Kunyu">
+  <title>Admin Security - Hotel Website</title>
+  <!-- External CSS & JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .secure-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .output-box {
+      background-color: #222;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .highlight {
+      background-color: #ff9;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+    }
+
+    #loginTrail, #activeUsers {
+      background-color: #f2f2f2;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    #activeUsers {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .user-box {
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      flex: 1;
+      max-width: 150px;
+    }
+
+    .user-box h4 {
+      font-size: 16px;
+    }
+
+    #errorOutput {
+      color: red;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Admin Security Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <!-- Cryptography Section -->
+    <div class="secure-box">
+      <h2 class="section-title">Cryptography & Encryption</h2>
+      <button onclick="hashMessage()">Generate Hash</button>
+      <div class="output-box" id="hashResult"></div>
+
+      <button onclick="encryptMessage()">Encrypt Message</button>
+      <div class="output-box" id="encryptedMessage"></div>
+    </div>
+
+    <!-- Error Management Section -->
+    <div class="secure-box">
+      <h2 class="section-title">Error Management</h2>
+      <button onclick="simulateError()">Simulate Server Error</button>
+      <div id="errorOutput" class="output-box"></div>
+    </div>
+
+    <!-- Authentication and Authorization Section -->
+    <div class="secure-box">
+      <h2 class="section-title">Authentication & Authorization</h2>
+      <div class="form-group">
+        <input type="password" id="passwordInput" placeholder="Enter Admin Password" />
+      </div>
+      <button onclick="verifyAdmin()">Login as Admin</button>
+      <div id="authResult" class="output-box"></div>
+    </div>
+
+    <!-- Backdoor & Trapdoor Section -->
+    <div class="secure-box">
+      <h2 class="section-title">Backdoor/Trapdoor</h2>
+      <button onclick="createTrapdoor()">Activate Backdoor</button>
+      <div id="backdoorResult" class="output-box"></div>
+    </div>
+
+    <!-- Open Ports and Security Section -->
+    <div class="secure-box">
+      <h2 class="section-title">Open Ports Security</h2>
+      <button onclick="scanPorts()">Scan Open Ports</button>
+      <div id="portScanResult" class="output-box"></div>
+    </div>
+  </div>
+
+  <!-- Login Trails & Active Users -->
+  <div id="loginTrail" class="secure-box">
+    <h2 class="section-title">Login Trails</h2>
+    <div id="trailOutput" class="output-box"></div>
+  </div>
+
+  <div id="activeUsers" class="secure-box">
+    <h2 class="section-title">Active Users</h2>
+    <div class="user-box">
+      <h4>User 1: John Doe</h4>
+      <p>Status: Active</p>
+    </div>
+    <div class="user-box">
+      <h4>User 2: Jane Smith</h4>
+      <p>Status: Inactive</p>
+    </div>
+  </div>
+
+  <!-- JavaScript & AI Implementation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1-crypto-js.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    let loginAttempts = [];
+    let activeUsers = ['John Doe', 'Jane Smith']; // Example active users
+
+    // Hashing Example using SHA-256 (Cryptography)
+    function hashMessage() {
+      const message = 'This is a secure message for hashing!';
+      const hash = CryptoJS.SHA256(message).toString(CryptoJS.enc.Base64);
+      document.getElementById('hashResult').innerText = `Hashed Message: ${hash}`;
+    }
+
+    // Encryption Example using AES (Symmetric Encryption)
+    function encryptMessage() {
+      const message = 'This is a sensitive message!';
+      const password = 'secret123'; // Symmetric key
+      const encryptedMessage = CryptoJS.AES.encrypt(message, password).toString();
+      document.getElementById('encryptedMessage').innerText = `Encrypted Message: ${encryptedMessage}`;
+    }
+
+    // Error Simulation Example (Error Management)
+    function simulateError() {
+      try {
+        // Simulate a runtime error
+        throw new Error("Server not found!");
+      } catch (error) {
+        document.getElementById('errorOutput').innerHTML = `Error Occurred: <span class="error-message">${error.message}</span>`;
+      }
+    }
+
+    // Authentication & Authorization Example
+    function verifyAdmin() {
+      const enteredPassword = document.getElementById('passwordInput').value;
+      const correctPassword = 'admin123'; // Example password
+      if (enteredPassword === correctPassword) {
+        document.getElementById('authResult').innerText = 'Access Granted: Welcome Admin!';
+        loginAttempts.push('Admin logged in at ' + new Date().toLocaleTimeString());
+        updateLoginTrail();
+      } else {
+        document.getElementById('authResult').innerText = 'Access Denied: Incorrect Password';
+      }
+    }
+
+    // Backdoor/Trapdoor (Simulating Hidden Access Point)
+    function createTrapdoor() {
+      // A backdoor/trapdoor function that mimics hidden access
+      const secretCode = 'supersecret';
+      const enteredCode = prompt('Enter secret access code:');
+      if (enteredCode === secretCode) {
+        document.getElementById('backdoorResult').innerText = 'Backdoor Access Granted!';
+      } else {
+        document.getElementById('backdoorResult').innerText = 'Incorrect Code. Access Denied.';
+      }
+    }
+
+    // Scan for Open Ports (Example using JavaScript)
+    function scanPorts() {
+      const openPorts = [22, 80, 443, 3306, 8080]; // Common open ports
+      const message = 'Scanning for open ports...';
+
+      document.getElementById('portScanResult').innerText = message;
+
+      setTimeout(() => {
+        document.getElementById('portScanResult').innerText = `Open Ports: ${openPorts.join(', ')}`;
+      }, 2000);
+    }
+
+    // Display login trail
+    function updateLoginTrail() {
+      document.getElementById('trailOutput').innerHTML = loginAttempts.map(attempt => `<p>${attempt}</p>`).join('');
+    }
+  </script>
+
+</body>
+
+</html>
