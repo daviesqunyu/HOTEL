@@ -9,7 +9,6 @@
   <!-- External Stylesheets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <style>
     /* General Styling */
     body {
@@ -18,6 +17,7 @@
       padding: 0;
       background: linear-gradient(to right, #141E30, #243B55);
       color: #f0f0f0;
+      overflow-x: hidden;
     }
 
     header {
@@ -40,6 +40,30 @@
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       color: #333;
+      position: relative;
+    }
+
+    .profile-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      justify-content: flex-start;
+    }
+
+    .profile-buttons button {
+      padding: 12px 20px;
+      background: linear-gradient(to right, #6A82FB, #FC5C7D);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-buttons button:hover {
+      background: linear-gradient(to right, #FC5C7D, #6A82FB);
+      transform: scale(1.1);
     }
 
     .profile-details p {
@@ -47,28 +71,16 @@
       font-size: 18px;
     }
 
-    button {
-      padding: 12px 25px;
-      background: linear-gradient(to right, #6A82FB, #FC5C7D);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    button:hover {
-      background: linear-gradient(to right, #FC5C7D, #6A82FB);
-      transform: scale(1.1);
-    }
-
-    .ai-recommendations, .calendar-container, .three-js-container, .chatbot-container {
+    .ai-recommendations,
+    .calendar-container,
+    .chatbot-container {
       margin-top: 40px;
-      background: linear-gradient(to bottom, #243B55, #141E30);
       padding: 20px;
       border-radius: 10px;
-      color: #f0f0f0;
+    }
+
+    .ai-recommendations {
+      background: linear-gradient(to bottom, #243B55, #141E30);
     }
 
     .ai-recommendations ul {
@@ -81,30 +93,62 @@
       bottom: 20px;
       right: 20px;
       width: 350px;
-      height: 60px;
-      background: #28a745;
+      height: auto;
+      background: rgba(0, 0, 0, 0.8);
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      color: white;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
+    #chatbot-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+
+    #chatbot-user-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #chatbot-input button {
+      margin-left: 10px;
+      padding: 10px;
+      background: #28a745;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Subtle Background Animation */
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
       }
-      to {
-        opacity: 1;
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
       }
     }
 
-    @keyframes slideIn {
-      from {
-        transform: translateY(-50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(-45deg, #6A82FB, #FC5C7D, #243B55, #141E30);
+      background-size: 400% 400%;
+      z-index: -1;
+      animation: gradientShift 10s ease infinite;
     }
   </style>
 </head>
@@ -117,14 +161,18 @@
     <!-- Profile Section -->
     <div class="profile-container">
       <h2>Welcome, DAVIS KUNYU!</h2>
+      <div class="profile-buttons">
+        <button onclick="alert('Adding a new booking...')">Add Booking</button>
+        <button onclick="alert('Requesting a service...')">Request Service</button>
+        <button onclick="alert('Processing payment...')">Pay</button>
+        <button onclick="alert('Cancelling booking...')">Cancel</button>
+      </div>
       <div class="profile-details">
         <p><i class="fas fa-envelope"></i> Email: user@example.com</p>
         <p><i class="fas fa-phone"></i> Phone: +1234567890</p>
         <p><i class="fas fa-map-marker-alt"></i> Address: 123 Luxury Lane, City, Country</p>
       </div>
-      <button onclick="alert('Navigating to home page...')">Back to Home</button>
     </div>
-
     <!-- AI Recommendations -->
     <div class="ai-recommendations">
       <h3>Recommended Activities</h3>
@@ -134,87 +182,54 @@
         <li>🛀 Complimentary spa massage for bookings.</li>
       </ul>
     </div>
-
     <!-- Booking Calendar -->
     <div class="calendar-container">
       <h3>Your Bookings</h3>
       <div id="user-booking-calendar"></div>
     </div>
-
-    <!-- Virtual Lobby -->
-    <div class="three-js-container">
-      <h3>Virtual Lobby - Explore 3D</h3>
-      <div id="three-js-lobby"></div>
-    </div>
-
     <!-- Chatbot -->
     <div class="chatbot-container">
-      <div id="chatbot">
-        <div id="chatbot-messages"></div>
-        <div id="chatbot-input">
-          <input type="text" id="chatbot-user-input" placeholder="Ask me anything...">
-          <button onclick="chatbotSend()">Send</button>
-        </div>
+      <div id="chatbot-messages"></div>
+      <div id="chatbot-input">
+        <input type="text" id="chatbot-user-input" placeholder="Ask me anything...">
+        <button onclick="chatbotSend()">Send</button>
       </div>
     </div>
   </main>
-</body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  // Booking Calendar Setup
-  $(document).ready(function () {
-    $('#user-booking-calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      events: [
-        { title: 'Suite Booking', start: '2024-11-15', end: '2024-11-18', color: '#0074D9' },
-        { title: 'Spa Appointment', start: '2024-11-20', color: '#2ECC40' }
-      ]
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <script>
+    // Booking Calendar Setup
+    $(document).ready(function () {
+      $('#user-booking-calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        events: [
+          { title: 'Suite Booking', start: '2024-11-15', end: '2024-11-18', color: '#0074D9' },
+          { title: 'Spa Appointment', start: '2024-11-20', color: '#2ECC40' }
+        ]
+      });
     });
-  });
 
-  // Three.js Virtual Lobby
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 600, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth * 0.6, 600);
-  document.getElementById('three-js-lobby').appendChild(renderer.domElement);
-
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x0074D9 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-  camera.position.z = 5;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Chatbot Functionality
-  function chatbotSend() {
-    const userInput = document.getElementById('chatbot-user-input').value;
-    if (userInput.trim() !== '') {
-      const messageContainer = document.getElementById('chatbot-messages');
-      const userMessage = `<div><strong>You:</strong> ${userInput}</div>`;
-      messageContainer.innerHTML += userMessage;
-      document.getElementById('chatbot-user-input').value = '';
-      setTimeout(() => {
-        const botReply = `<div><strong>Bot:</strong> Let's explore Davira Suites together!</div>`;
-        messageContainer.innerHTML += botReply;
-      }, 1000);
+    // Chatbot Functionality
+    function chatbotSend() {
+      const userInput = document.getElementById('chatbot-user-input').value;
+      if (userInput.trim() !== '') {
+        const messageContainer = document.getElementById('chatbot-messages');
+        const userMessage = `<div><strong>You:</strong> ${userInput}</div>`;
+        messageContainer.innerHTML += userMessage;
+        document.getElementById('chatbot-user-input').value = '';
+        setTimeout(() => {
+          const botReply = `<div><strong>Bot:</strong> Let's explore Davira Suites together!</div>`;
+          messageContainer.innerHTML += botReply;
+        }, 1000);
+      }
     }
-  }
-</script>
+  </script>
+</body>
 
 </html>

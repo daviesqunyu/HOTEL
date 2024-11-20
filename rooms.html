@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .room {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px;
+        }
+        .room-card {
+            flex: 1 1 calc(33% - 40px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .room-card img {
+            width: 100%;
+            height: auto;
+        }
+        .room-card-content {
+            padding: 15px;
+        }
+        .room-card-content h3 {
+            margin-top: 0;
+        }
+        .room-card-content p {
+            color: #555;
+        }
+        .btn-book {
+            display: block;
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            color: white;
+            background-color: #4CAF50;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-book:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Rooms</h1>
+    </header>
+
+    <section class="room">
+        <!-- Room 1 -->
+        <div class="room-card">
+            <img src="room1.jpg" alt="Room 1">
+            <div class="room-card-content">
+                <h3>Deluxe Room</h3>
+                <p>Enjoy a luxurious stay with stunning views.</p>
+                <a href="booking.html" class="btn-book">Book Now</a>
+            </div>
+        </div>
+        <!-- Room 2 -->
+        <div class="room-card">
+            <img src="room2.jpg" alt="Room 2">
+            <div class="room-card-content">
+                <h3>Executive Suite</h3>
+                <p>Experience the ultimate comfort and elegance.</p>
+                <a href="booking.html" class="btn-book">Book Now</a>
+            </div>
+        </div>
+        <!-- Room 3 -->
+        <div class="room-card">
+            <img src="room3.jpg" alt="Room 3">
+            <div class="room-card-content">
+                <h3>Standard Room</h3>
+                <p>Affordable and cozy for a great night’s sleep.</p>
+                <a href="booking.html" class="btn-book">Book Now</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
