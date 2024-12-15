@@ -163,128 +163,142 @@ button:hover{
 </style>
 
 </head>
+
 <body>
-<!-- sign up form -->
-  <div class="container" id="signup" style="display:none;">
-
+  
+<!-- Secure Registration Form -->
+<div class="container" id="signup" style="display:none;">
   <h1 class="form-title">Register</h1>
-  <form method="post" action="register.php">
+  <form method="post" action="register.php" id="registrationForm">
+    <!-- First Name Input -->
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" name="fName" id="fName" required pattern="[A-Za-z]+" title="First name must contain only letters">
+      <label for="fName">First Name</label>
+    </div>
 
-<div class="input-group">
-  <i class="fas fa-user"></i>
-  <input type="text" name="fName" id="fName">
-  <label for="FName">First Name</label>
+    <!-- Last Name Input -->
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" name="lName" id="lName" required pattern="[A-Za-z]+" title="Last name must contain only letters">
+      <label for="lName">Last Name</label>
+    </div>
+
+    <!-- Email Input -->
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" name="email" id="email" required>
+      <label for="email">E-Mail</label>
+    </div>
+
+    <!-- Password Input -->
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" name="password" id="password" required pattern=".{8,}" title="Password must be at least 8 characters long">
+      <label for="password">Password</label>
+    </div>
+
+    <br>
+
+    <!-- Submit Button -->
+    <input type="submit" class="btn" value="Sign Up" name="Sign Up">
+  </form>
+
+  <!-- Google, Facebook, Instagram icons -->
+  <p class="or">--------------or--------------</p>
+  <div class="icons">
+    <i class="fab fa-google"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-x"></i>
+  </div>
+
+  <div class="links">
+    <p class="account-text">Already have an account?</p>
+    <button id="signInButton" class="sign-in-button" aria-label="Sign In to Your Account">Sign In</button>
+  </div>
 </div>
 
-<div class="input-group">
-  <i class="fas fa-user"></i>
-  <input type="text" name="lName" id="lName">
-  <label for="FName">Last Name</label>
-</div>
-
-<div class="input-group">  
-  <i class="fas fa-envelope"></i>
-  <input type="email" name="email" id="email">
-  <label for="email">E-Mail</label>
-</div>
-
-<div class="input-group">  
-  <i class="fas fa-lock"></i>
-  <input type="password" name="password" id="password" placeholder="password">
-  <label for="password"></label>
-</div>
-
-<br>
-
-<input type="submit" class="btn" value="Sign Up" name="Sign Up">
-</form>
-
-
-<p class="or">
---------------or--------------
-</p>
-
-<div class="icons">
-<i class="fab fa-google"></i>
-<i class="fab fa-facebook"></i>
-<i class="fab fa-instagram"></i>
-<i class="fab fa-x"></i>
-
-</div>
-
-<div class="links">
-  <p class="account-text">Already have an account?</p>
-  <button id="signInButton" class="sign-in-button" aria-label="Sign In to Your Account">
-    Sign In
-  </button>
-</div>
-</div>
-
-<!--SIGN UP DUPLICATE-->
-
+<!-- Secure Sign In Form -->
 <div class="container" id="signIn">
   <h1 class="form-title">Sign In</h1>
-  <form method="post" action="register.php">
+  <form method="post" action="register.php" id="loginForm">
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" name="email" id="email" required>
+      <label for="email">E-Mail</label>
+    </div>
 
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" name="password" id="password" required>
+      <label for="password">Password</label>
+    </div>
 
-<div class="input-group">  
-  <i class="fas fa-envelope"></i>
-  <input type="email" name="email" id="email">
-  <label for="email">E-Mail</label>
+    <p class="recover">
+      <a href="#">Recover Password</a>
+    </p>
+
+    <input type="submit" class="btn" value="Sign In" name="Sign In">
+  </form>
+
+  <p class="or">--------------or--------------</p>
+  <div class="icons">
+    <i class="fab fa-google"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-x"></i>
+  </div>
+
+  <div class="links">
+    <p>Don't Have an Account Yet?</p>
+    <button id="signUpButton">Sign Up</button>
+  </div>
 </div>
-
-<div class="input-group">
-  <i class="fas fa-lock"></i>
-  <input type="password" name="password" id="password" placeholder="password">
-  <label for="password"></label>
-</div>
-
-<p class="recover">
-  <a href="#">Recover Password</a>
-</p>
-
-<input type="submit" class="btn" value="Sign In" name="Sign In">
-</form>
-
-<p class="or">
---------------or--------------
-</p>
-
-<div class="icons">
-<i class="fab fa-google"></i>
-<i class="fab fa-facebook"></i>
-<i class="fab fa-instagram"></i>
-<i class="fab fa-x"></i>
-</div>
-
-<div class="links">
-  <p>Don't Have Account Yet?</p>
-  <button id="signUpButton">Sign Up</button>
-</div>
-
-</div>
-
 
 <script>
+  
+// Secure Form Handling with JavaScript
 const signUpButton = document.getElementById('signUpButton');
 const signInButton = document.getElementById('signInButton');
-const signInForm = document.getElementById('signIn'); 
-const signUpForm = document.getElementById('signup'); 
+const signInForm = document.getElementById('signIn');
+const signUpForm = document.getElementById('signup');
 
+// Switch between forms
 signUpButton.addEventListener('click', function () {
-    signInForm.style.display = "none"; 
-    signUpForm.style.display = "block"; 
+  signInForm.style.display = "none";
+  signUpForm.style.display = "block";
 });
 
 signInButton.addEventListener('click', function () {
-    signInForm.style.display = "block"; 
-    signUpForm.style.display = "none"; 
+  signInForm.style.display = "block";
+  signUpForm.style.display = "none";
 });
 
-   
+// Form Validation - Client-Side
+document.getElementById("registrationForm").addEventListener("submit", function(event){
+  const password = document.getElementById("password").value;
+  if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)) {
+    alert("Password must contain at least one digit, one lowercase letter, and one uppercase letter.");
+    event.preventDefault();
+  }
+});
+
+// Check if form inputs are valid
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  if (!email || !password) {
+    alert("Both fields are required.");
+    event.preventDefault();
+  }
+});
+
+// Enforce HTTPS - Redirect if the page is served over HTTP
+if (window.location.protocol !== "https:") {
+  window.location.replace("https://" + window.location.href.substring(window.location.protocol.length));
+}
 </script>
-
-
 
 </body>
 </html> 

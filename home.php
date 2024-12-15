@@ -194,7 +194,7 @@
     <nav>
       <button onclick="navigateTo('login.php')">Login</button>
       <button onclick="navigateTo('services.html')">Our Services</button>
-      <button onclick="navigateTo('contact.html')">Contact Us</button>
+      <button onclick="navigateTo('contactus.html')">Contact Us</button>
     </nav>
   </header>
 
